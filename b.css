@@ -1,0 +1,3 @@
+create table buy(id int not null auto_increment,E_currency varchar(20) ,Amount bigint, 
+e_currency_details text,invoice_email_addy varchar(40),invoice_sent_status varchar(1),upoad_file blob, 
+username varchar(20),completed char(1), creation_date date, completion_date date, primary key (id),order_id varchar(30));

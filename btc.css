@@ -1,0 +1,69 @@
+
+
+
+
+ .nav .fa {
+	
+	font-size:20px;
+	
+	padding:3px;
+	border-radius:5px;
+	background:white;
+	color:#6a1b9a
+}
+
+.jumbotron {
+	
+	background:linear-gradient(to right,#6a1b9a,#9c27b0);
+	min-height:400px;
+	color:white;
+	margin-bottom:0px;
+}
+
+.jumbotron a {
+	
+	text-decoration:none;
+	border-color:orange;
+	padding:10px;
+	color:white;
+	border-width:2px;
+	font-family:verdana;
+	
+}
+
+.jumbotron a:hover {
+	background:white;
+	color:orange;
+	border:none;
+}
+
+.jumbo-elements h2 {
+	
+	margin:40px;
+	margin-bottom:50px;
+}
+
+.navbar-default {
+	
+	background:white;
+}
+
+.under-border {
+	border-style:none none double none;
+	border-color:green;
+	color:orange;
+}
+
+.btc-logo img{
+	
+	padding:5px;
+	max-width:100px;
+	margin:20px;
+	
+}
+
+.modal-header h1 {
+	
+	color:#6a1b9a;
+	
+}
