@@ -12,7 +12,7 @@ if (!isset($_SESSION["username"])){
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Site|Dashboard</title>
+        <title>Site|Settings</title>
         <meta name="description" content="Dashboard">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -74,7 +74,7 @@ if (!isset($_SESSION["username"])){
                 </a>
                 <ul class="c-sidebar__list">
                     <li class="c-sidebar__item">
-                        <a class="c-sidebar__link is-active" href="#">
+                        <a class="c-sidebar__link" href="#">
                             <span class="c-sidebar__icon">
                                 <i class="fa fa-home"></i>
                             </span>Dashboard

@@ -13,10 +13,6 @@ if ($username != "BITCOINEX"){
         echo("error");
     }else{
         $row = mysqli_fetch_array($query_run);
-            if ($row['status'] != 'V'){
-                echo 'activate';
-            }else{
-                echo("success");
 
 
                 $_SESSION['email']=$row['email'];
@@ -28,7 +24,7 @@ if ($username != "BITCOINEX"){
                 $_SESSION["phoneNo"] = $row['phoneNo'];
                 $_SESSION["reg_date"] = $row['reg_date'];
                 $_SESSION['activation_id'] = $row['activation_id'];
-            }
+            echo 'success';
 
 
     }

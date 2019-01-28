@@ -133,7 +133,21 @@ if (!isset($_SESSION["username"])){
             </header>
 
             <div class="container-fluid">
-
+            <?php
+                    
+                    if ($_SESSION['status']!="V"){
+                        echo("<div class=\"row\">");
+                        echo("<div class=\"col-sm-8 col-lg-12 col-md-12 c-profile-card\" style=\"margin:20px\">");
+                        echo("<div class=\"c-state--info\" style=\"margin:20px;padding:20px\">");
+                        echo("<span style=\"color:#7f8fa4\">");
+                        echo("Your Account has not been activated. if you want to activate click <a href=\"activation.php?activation_id=".$_SESSION['activation_id']."\">here</a>");
+                        echo("</span>");
+                        echo("</div>");
+                        
+                        echo("</div>");
+                        echo("</div>");
+                    }
+                    ?>
 
 
 

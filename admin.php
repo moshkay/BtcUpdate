@@ -4,6 +4,11 @@ session_start();
 require_once("configdb.php");
 if (!isset($_SESSION["username"])){
     header("Location:index.php");
+}else{
+    if ($_SESSION['username'] != 'BITCOINEX'){
+        session_destroy();
+        header("Location:index.php");
+    }
 }
 ?>
 
@@ -71,19 +76,20 @@ if (!isset($_SESSION["username"])){
 
                 document.getElementById('status').innerHTML ="";
                 var currency_type = $("#currency_type").val();
+                var price_type =$('#price_type').val();
                 var rate = $("#rate").val();
                 $.ajax({
                     type:"POST",
                     url:"testimony_submit.php",
-                    data:{currency_type:currency_type,rate:rate,file:"currencySettings"},
+                    data:{currency_type:currency_type,rate:rate,file:"currencySettings",price_type:price_type},
                     success:function(result){
                         //alert(result);
                         if (result == 'settingssuccess'){
-                            document.getElementById('status').innerHTML = 'Profile updated successfully.';
+                            document.getElementById('status').innerHTML = 'Currency updated successfully.';
                             //alert("success block");
                         }else{
 
-                            document.getElementById('status').innerHTML="Profile could not be updated";
+                            document.getElementById('status').innerHTML="Currency could not be updated";
                         }
                     },
                     error:function(xhr,ajaxOptions,thrownError){
@@ -213,7 +219,9 @@ if (!isset($_SESSION["username"])){
             </a>
 
             <div class="c-dropdown__menu dropdown-menu dropdown-menu-right" aria-labelledby="dropdwonMenuAvatar">
-                <a class="c-dropdown__item dropdown-item" href="settings.php">Edit Profile</a>
+            <form method="POST" action="#">
+            <button class="c-dropdown__item dropdown-item" name="logout" type="submit">Log out</button>
+            </form>
             </div>
         </div>
     </header>
@@ -222,7 +230,7 @@ if (!isset($_SESSION["username"])){
 
 
         <span class="c-divider has-text u-m-xsmall">Registered Users</span>
-        <div class=""row">
+        <div class="row">
         <div class="col-sm-8 col-lg-12 col-md-12 c-profile-card">
             <div class="u-color-success">
                                 <span id="status">
@@ -400,6 +408,17 @@ if (!isset($_SESSION["username"])){
                                         <option value="bitcoin">Bitcoin</option>
                                     </select>
                                 </div>
+                                <div class="col-sm-6 col-md-12 c-field u-mb-medium">
+
+                                    <label class="c-field__label" for="select1">Operation Price</label>
+
+                                    <!-- Select2 jquery plugin is used -->
+                                    <select class="c-select" id="price_type">
+                                        <option value="">Select Price type</option>
+                                        <option value="buy_exchange_amount">Buy Price</option>
+                                        <option value="sell_exchange_amount">Sell Price</option>
+                                    </select>
+                                </div>
                                 <div class="col-sm-6 col-md-12 u-mb-small">
                                     <div class="c-field">
                                         <label class="c-field__label" for="rate" >Rate</label>
@@ -411,7 +430,7 @@ if (!isset($_SESSION["username"])){
                                     </div>
                                 </div>
                                 <center>
-                                    <button class="c-btn c-btn--info c-toggle__btn" type="submit" id="currencySubmit">Process</button>
+                                    <button class="c-btn c-btn--info c-toggle__btn" type="submit" id="currencySubmit">Submit</button>
                                 </center>
                             </form>
 

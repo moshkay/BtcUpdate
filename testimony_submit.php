@@ -2,6 +2,7 @@
     ob_start();
     session_start();
     require_once("configdb.php");
+    require_once "PHPMailerAutoload.php";
 
 if ($_POST['file'] == 'testimony'){
     if ($_POST['testimony']){
@@ -84,8 +85,13 @@ if ($_POST["file"] =="adminSettings"){
 }
 
     if ($_POST["file"] =="currencySettings"){
-        if ($_POST['rate']){
-            $query = "update e_currency set exchange_amount='".$_POST['rate']."'";
+        if ($_POST['rate'] && $_POST['price_type']){
+            if ($_POST['price_type'] == 'buy_exchange_amount'){
+                $query = "update e_currency set buy_exchange_amount='".$_POST['rate']."'";
+            }else{
+                $query = "update e_currency set sell_exchange_amount='".$_POST['rate']."'";
+            }
+            
             @ $query_run = mysqli_query($mysqli,$query);
             if ($query_run){
                 echo "settingssuccess";
@@ -111,6 +117,103 @@ if ($_POST["file"] =="adminSettings"){
             }else{
                 echo "settingserror";
             }
+
+    }
+	if ($_POST["file"] =="reset"){
+
+        $username = $_POST["name"];
+        $email = $_POST["email"];
+        $subject ="Password Reset";
+        $query ="select * from users where username='$username' and email='$email'";
+        //echo $query;
+        @ $query_run =mysqli_query($mysqli,$query);
+        if (mysqli_num_rows($query_run) == 0){
+            echo("error");
+        }else{
+            $token = rand(999,999999);
+            $hash_val = md5($token);
+            
+            $row = mysqli_fetch_array($query_run);
+            $firstname = $row['firstname'];
+            $lastname = $row['lastname'];
+            $query = "update users set reset='$hash_val' where email='$email'";
+            @ $query_run = mysqli_query($mysqli,$query);
+            //email
+            $message = "<table border='1' cellpadding='0' cellspacing='0' width='100%'>";
+            $message = $message."<tr>";
+            $message = $message."<td style='padding: 40px 30px 40px 30px;'>";
+            $message = $message."<p>Reset your BitcoinEx Account Password</p>";
+            $message = $message."<p>Dear $firstname $lastname, to reset your BitcoinEx Account:</p>";
+            $message = $message."<p>Click <a style='background-color: #1a69a4' href='localhost/btcupdate/reset-password.php?activation_id=$hash_val'>Here</a> to reset your password.</p>";
+            $message = $message."<p>Alternatively copy and paste the below in to your browser address:<br><a href=\"localhost/btcupdate/reset-password.php?activation_id=$hash_val\">localhost/btcupdate/reset-password.php?activation_id=$hash_val </a></p>";
+            $message = $message."<p style='margin-bottom: 60px'>Regards,<br>BitcoinEx.com Support</p><td></tr>";
+            $message = $message."<tr>";
+            $message = $message."<td style='text-align: center;padding:10px;background-color:orangered'>&copy; 2019 - BitcoinEx";
+            $message = $message."</td>";
+            $message = $message."</tr>";
+            $message = $message."</table>";
+            
+            //send mail
+            $mail = new PHPMailer();
+            //$mail->SMTPDebug=3;
+            $mail->isSMTP();
+            $mail->Host="smtp.gmail.com";
+            $mail->SMTPAuth=true;
+            $mail->Username="kayzeebiz@gmail.com";
+            $mail->Password="moshkay55$";
+            $mail->Port=587;
+            $mail->From="kayzeebiz@gmail.com";
+            $mail->FromName='saliu moshood kolawole';
+            $mail->SMTPSecure='tls';
+            $mail->smtpConnect(
+                array(
+                    "ssl"=> array(
+                        "verify_peer"=>false,
+                        "verify_peer_name"=>false,
+                        "allow_self_signed"=>true
+                    )
+                )
+            );
+            $mail->addAddress("$email","saliu moshood kolawole");
+           
+            $mail->isHTML(true);
+            $mail->Subject=$subject;
+            $mail->Body=$message;
+            //$mail->AltBody="Mail verification. Pls verify ur account  without debug";
+            if (!$mail->send()){
+                echo "Mailer error:". $mail->ErrorInfo;
+
+            }else{
+                echo 'success';
+            }
+            
+            //end email
+
+        }
+    }
+    if ($_POST["file"] =="reset_submit"){
+        $password = md5($_POST["password"]);
+        $ver_id = $_POST["ver_id"];
+        if ($ver_id){
+            $query ="select * from users where reset='$ver_id'";
+            //echo $query;
+            @ $query_run =mysqli_query($mysqli,$query);
+            if (mysqli_num_rows($query_run) == 0){
+                echo("error");
+            }else{
+                $row = mysqli_fetch_array($query_run);
+                $email = $row['email'];
+                //echo $email;
+                $query = "update users set password='$password' where email='$email'";
+               
+                @ $query_run = mysqli_query($mysqli,$query); 
+                if ($query_run){
+                    echo 'success';
+                }else{
+                    echo 'error';
+                }
+             }
+        }
 
     }
 

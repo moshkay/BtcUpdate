@@ -49,8 +49,10 @@ $(document).ready(function(){
                         }else{
                             if (result =='email'){
                                 alert("Error: Email already exists!");
+                                document.getElementById('loading').style.display='none';
                             }else{
                                 alert("Error: Username already exists!");
+                                document.getElementById('loading').style.display='none';
                             }
                             
                         }
@@ -94,6 +96,32 @@ $(document).ready(function(){
             })
         }
      });
+
+     $('#forget_submit').click(function(e){
+        e.preventDefault();
+        var name = $('#forget_name').val();
+        var email = $('#forget_email').val();
+        if ((name) &&(email)){
+            $.ajax({
+                type:"POST",
+                url:"testimony_submit.php",
+                data:{name:name,email:email,file:"reset"},
+                success:function(result){
+                        if (result == 'success'){
+                            alert("An Email has been sent to the email address");
+                        }else{
+                            alert("Error: Incorrect Username or Email Address!!!")
+                            
+                        }
+                    },
+                    error:function(xhr){
+                        alert("an error occured"+xhr.statusText)
+                    }
+
+            })
+        }
+
+     })
 });
 
 function showpassword(){
@@ -278,25 +306,25 @@ function showpassword(){
 <h1 class='text-center'>RETRIEVE PASSWORD</h1>
 </div>
 <div class='modal-body'>
-<form class='form-horizontal role='form'>
+<form class='form-horizontal' role='form'>
 <div class='form-group'>
 <label for='name' class='col-xs-2 control-label'>Username</label>
 <div class='col-xs-10'>
-<input type='text' class='form-control' id='name' placeholder='Enter your name' required>
+<input type='text' class='form-control' id='forget_name' placeholder='Enter your name' required>
 </div>
 </div>
 
 <div class='form-group'>
 <label for='email' class='col-xs-2 control-label'>Email</label>
 <div class='col-xs-10'>
-<input type='email' class='form-control' id='email' placeholder='eg.wellmade@gmail.com' required>
+<input type='email' class='form-control' id='forget_email' placeholder='eg.wellmade@gmail.com' required>
 </div>
 </div>
 
 
 </div>
 <div class='modal-footer'>
-<input name='submit' type='submit' id='submit' value='submit' class='btn btn-primary'>
+<input name='submit' type='submit' id='forget_submit' value='submit' class='btn btn-primary'>
 <button type='button' class='btn btn-danger' data-dismiss='modal'>close</button>
 </form>
 </div>

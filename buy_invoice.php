@@ -80,7 +80,7 @@
                              @ $query_run = mysqli_query($mysqli,$query);
                              if ($query_run) {
                                  $row = mysqli_fetch_array($query_run);
-                                 $rate = $row['exchange_amount'];
+                                 $rate = $row['buy_exchange_amount'];
                                  $total_amount = $rate*$amount;
 
                              }

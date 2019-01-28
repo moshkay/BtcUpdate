@@ -12,7 +12,7 @@ if (!isset($_SESSION["username"])){
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Site|Dashboard</title>
+        <title>Site|Testimony</title>
         <meta name="description" content="Dashboard">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 

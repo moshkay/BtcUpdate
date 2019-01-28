@@ -48,7 +48,7 @@ if($query_run){
     $mail->Host="smtp.gmail.com";
     $mail->SMTPAuth=true;
     $mail->Username="kayzeebiz@gmail.com";
-    $mail->Password="moshkay55";
+    $mail->Password="moshkay55$";
     $mail->Port=587;
     $mail->From="kayzeebiz@gmail.com";
     $mail->FromName='saliu moshood kolawole';
